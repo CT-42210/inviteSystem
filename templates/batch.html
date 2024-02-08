@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Batches</title>
+    <style>
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+        }
+        /* Clear floats after the columns */
+        .row::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        {% for batch in batches %}
+        <div class="column">
+            <h2>Batch {{ loop.index }}</h2>
+            <textarea id="message{{ loop.index }}" name="message{{ loop.index }}" rows="4" cols="50"></textarea>
+            {% for group, names in batch.items() %}
+            <h4>{{ group }}</h4>
+            <ul>
+                {% for name in names %}
+                    <li>{{ name }}</li>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+            <form action="/send_invites" method="post">
+                <input type="submit" value="Send Invites">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="/">Home</a>
+</body>
+</html>

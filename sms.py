@@ -10,12 +10,13 @@ carriers = {
     'att': '@mms.att.net',
     'tmobile': '@tmomail.net',
     'verizon': '@vtext.com',
-    'unknown': 'unknown'
+    'unknown': 'unknown',
+    'error': 'error'
 }
 
 
 def lookup(number):
-    if type(number) != "str":
+    if isinstance(number, str):
         number = int(number)
 
     def apiLookup(number):
@@ -33,6 +34,8 @@ def lookup(number):
             return "tmobile"
         elif 'mint' in apiResult['carrier'].lower():
             return "tmobile"
+        elif '' in apiResult['carrier'].lower():
+            return "error"
         else:
             return "unknown"
 
@@ -64,9 +67,9 @@ def send(messageData):
         number = items['number']
         carrier = carriers[lookup(number)]
         if carrier == "unknown":
-            return 'ERR: can not find carrier for number {}'.format(number)
+            return f'ERR: can not find carrier for number {number}'
         message = items['message']
 
-        to_number = (number + carriers)
+        to_number = (number + carrier)
         server.sendmail(auth[0], to_number, message)
         print(f"Sent message \n{message} \nto {number}")

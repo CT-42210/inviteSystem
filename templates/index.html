@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Party Invites</title>
+    <style>
+        .column {
+            float: left;
+            width: 50%;
+        }
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="column">
+            <h1>Contacts</h1>
+            <form action="/add_to_party" method="post">
+                {% for group, names in contacts.items() %}
+                    <h3>{{ group }}</h3>
+                    {% for name in names %}
+                        <input type="checkbox" id="{{ name }}" name="invitees" value="{{ name }}">
+                        <label for="{{ name }}">{{ name }}</label><br>
+                    {% endfor %}
+                {% endfor %}
+                <input type="submit" value="Add">
+            </form>
+        </div>
+        <div class="column">
+            <h1>Invitees</h1>
+            <form action="/add_to_batch" method="post">
+                {% for group, names in invitees.items() %}
+                    <h3>{{ group }}</h3>
+                    {% for name in names %}
+                        <input type="checkbox" id="{{ name }}" name="group_invitees" value="{{ name }}">
+                        <label for="{{ name }}">{{ name }}</label><br>
+                    {% endfor %}
+                {% endfor %}
+                <input type="submit" name="group_button" value="batch 1">
+                <input type="submit" name="group_button" value="batch 2">
+                <input type="submit" name="group_button" value="batch 3">
+            </form>
+        </div>
+    </div>
+    <form action="/send_invites" method="post">
+        <input type="submit" value="Send Invites">
+    </form>
+    <a href="/groups">group mode</a>
+    <a href="/batches">Batches</a>
+
+</body>
+</html>
