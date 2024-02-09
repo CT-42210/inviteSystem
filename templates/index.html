@@ -36,14 +36,16 @@
                 {% for group, names in invitees.items() %}
                     <h3>{{ group }}</h3>
                     {% for name in names %}
-                        <input type="checkbox" id="{{ name }}" name="group_invitees" value="{{ name }}">
+                        <input type="checkbox" id="{{ name }}" name="batch_invitees" value="{{ name }}">
                         <label for="{{ name }}">{{ name }}</label><br>
                     {% endfor %}
                 {% endfor %}
-                <input type="submit" name="group_button" value="batch 1">
-                <input type="submit" name="group_button" value="batch 2">
-                <input type="submit" name="group_button" value="batch 3">
+                <input type="submit" name="batch_button" value="batch 1">
+                <input type="submit" name="batch_button" value="batch 2">
+                <input type="submit" name="batch_button" value="batch 3">
             </form>
+            <a href="/dump">dump invite list</a>
+
         </div>
     </div>
     <form action="/send_invites" method="post">

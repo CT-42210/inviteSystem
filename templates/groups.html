@@ -19,31 +19,28 @@
     <div class="row">
         <div class="column">
             <h1>Groups</h1>
-            <form action="/add_group" method="post">
+            <form action="/add_to_party_group" method="post">
                 {% for group, names in contacts.items() %}
-                <input type="checkbox" id="{{ group }}" name="groups" value="{{ group }}">
-                <label for="{{ group }}">{{ group }}</label><br>
-                    {% for name in names %}
-                    <p>{{ name }}</p>
-                    {% endfor %}
+                    <h3>{{ group }}</h3>
+                    <input type="checkbox" id="{{ group }}" name="group_invitees" value="{{ group }}">
+                    <label for="{{ group }}">{{ names }}</label><br>
                 {% endfor %}
                 <input type="submit" value="Add">
             </form>
         </div>
         <div class="column">
             <h1>Invitees</h1>
-            <form action="/add_to_batch" method="post">
+            <form action="/add_to_batch_group" method="post">
                 {% for group, names in invitees.items() %}
                     <h3>{{ group }}</h3>
-                    {% for name in names %}
-                    {% endfor %}
-                        <input type="checkbox" id="{{ name }}" name="group_invitees" value="{{ name }}">
-                        <label for="{{ name }}">{{ name }}</label><br>
+                    <input type="checkbox" id="{{ group }}" name="group_batch_invitees" value="{{ group }}">
+                    <label for="{{ group }}">{{ names }}</label><br>
                 {% endfor %}
-                <input type="submit" name="group_button" value="batch 1">
-                <input type="submit" name="group_button" value="batch 2">
-                <input type="submit" name="group_button" value="batch 3">
+                <input type="submit" name="group_batch_button" value="batch 1">
+                <input type="submit" name="group_batch_button" value="batch 2">
+                <input type="submit" name="group_batch_button" value="batch 3">
             </form>
+            <a href="/dump">dump invite list</a>
         </div>
     </div>
     <form action="/send_invites" method="post">
