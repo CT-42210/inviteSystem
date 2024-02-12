@@ -41,10 +41,6 @@ batch_dict = {
 
 @app.route('/')
 def home():
-    print(party_list)
-    print(batch1)
-    print(batch2)
-    print(batch3)
     return render_template('index.html', contacts=contacts, invitees=party_list)
 
 
@@ -126,7 +122,7 @@ def add_to_batch_group():
     return redirect('/')
 
 
-@app.route('/send_invites', methods=['POST'])
+@app.route('/send_invites', methods=['GET'])
 def send_invites():
     for invitee in party_list:
         messageData = {
@@ -138,17 +134,25 @@ def send_invites():
     return redirect('/')
 
 
-@app.route('/save', methods=['POST'])
+@app.route('/save', methods=['GET'])
 def save_data():
     with open('data.pkl', 'wb') as f:
         pickle.dump((party_list, [batch1, batch2, batch3]), f)
     return redirect('/')
 
 
-@app.route('/load', methods=['POST'])
+@app.route('/load', methods=['GET'])
 def load_data():
-    with open('data.pkl', 'rb') as f:
-        party_list, [batch1, batch2, batch3] = pickle.load(f)
+    global party_list, batch1, batch2, batch3
+    if os.path.exists('data.pkl') and os.path.getsize('data.pkl') > 0:
+        with open('data.pkl', 'rb') as f:
+            data = pickle.load(f)
+            party_list = data[0]
+            batch1 = data[1][0]
+            batch2 = data[1][1]
+            batch3 = data[1][2]
+    else:
+        print("No data to load")
     return redirect('/')
 
 
